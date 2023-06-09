@@ -1,0 +1,141 @@
+openapi: 3.0.0
+info:
+  title: Dug AI ChatGPT Plugin API
+  description: Interact with code in your VSCode Editor
+  version: 'v1'
+servers:
+  - url: 'http://localhost:3000'
+paths:
+  /tabs:
+    get:
+      operationId: getAllTabs
+      summary: Gets a list of all tabs in the editor
+      description: This operation allows me to get all of open tabs in the editor
+      responses:
+        '200':
+          description: A list of all tabs and their contents
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    tabName:
+                      type: string
+                    languageId:
+                      type: string
+                    isDirty:
+                      type: boolean
+                    isUntitled:
+                      type: boolean
+  /tabs/{tabName}:
+    get:
+      operationId: getTabInfo
+      summary: Gets information about a specific tab
+      description: This operation allows me to get information about a specific tab
+      parameters:
+        - name: tabName
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The tab information
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  tabName:
+                    type: string
+                  languageId:
+                    type: string
+                  isDirty:
+                    type: boolean
+                  isUntitled:
+                    type: boolean
+        '404':
+          description: Tab not found
+  /tabs/{tabName}/text:
+    get:
+      operationId: getTabText
+      summary: Gets the text of the document related to a specific tab
+      description: This operation allows me to get the text of the document related to a specific tab
+      parameters:
+        - name: tabName
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The document text
+          content:
+            text/plain:
+              schema:
+                type: string
+        '404':
+          description: Tab not found
+  /tabs/{tabName}/symbols:
+    get:
+      operationId: getTabSymbols
+      summary: Gets the outline of symbols in a document related to a specific tab
+      description: This operation allows me to get the outline of symbols in a document related to a specific tab
+      parameters:
+        - name: tabName
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The document symbols
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    kind:
+                      type: string
+                    range:
+                      type: object
+                      properties:
+                        start:
+                          type: object
+                          properties:
+                            line:
+                              type: number
+                            character:
+                              type: number
+                        end:
+                          type: object
+                          properties:
+                            line:
+                              type: number
+                            character:
+                              type: number
+                    selectionRange:
+                      type: object
+                      properties:
+                        start:
+                          type: object
+                          properties:
+                            line:
+                              type: number
+                            character:
+                              type: number
+                        end:
+                          type: object
+                          properties:
+                            line:
+                              type: number
+                            character:
+                              type: number
+        '404':
+          description: Tab not found
