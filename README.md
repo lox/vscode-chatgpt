@@ -1,65 +1,36 @@
-# VSCode ChatGPT Plugin
+# ChatGPT Plugin for VSCode
 
-This is the README for your extension "dug-ai". After writing up a brief description, we recommend including the following sections.
+This VSCode extension integrates OpenAI's powerful language model, ChatGPT, into your coding workflow. With this extension, you can share your VSCode editor with ChatGPT, allowing it to assist you in various ways.
 
-## Features
+## Operations
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
-
-For example if there is an image subfolder under your extension project workspace:
-
-\!\[feature X\]\(images/feature-x.png\)
-
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+- **Code Collaboration**: ChatGPT can help you write code, fix bugs, and understand complex code snippets. It can access a list of tabs you have open, view the contents of a tab, or view an outline of the code.
+- **Code Explanation**: Ask ChatGPT to explain what a specific piece of code does, and it will provide a detailed explanation.
+- **Code Modification**: ChatGPT can make changes to your code with the modifyTab operation, ensuring the correct line and character offsets from the latest outline of the code.
+- **Code Generation**: Give ChatGPT a prompt, such as the description of a function you want to write, and it will generate the code for you.
 
 ## Requirements
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+This extension requires VSCode version 1.60.0 or higher.
 
 ## Extension Settings
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
-
-For example:
-
 This extension contributes the following settings:
 
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
+- `chatgpt-plugin.enable`: Enable/disable this extension.
 
 ## Known Issues
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+Please report any issues you encounter in the [GitHub repository](https://github.com/lox/vscode-chatgpt).
 
 ## Release Notes
 
-Users appreciate release notes as you update your extension.
-
 ### 1.0.0
 
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
+Initial release of chatgpt-plugin.
 
 ---
 
-## Working with Markdown
+For more information on how to use this extension, check out our [User Guide](https://github.com/lox/vscode-chatgpt/wiki/User-Guide).
 
-You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+**Enjoy coding with ChatGPT!**

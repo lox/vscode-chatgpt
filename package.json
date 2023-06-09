@@ -1,6 +1,6 @@
 {
-  "name": "dug-ai",
-  "displayName": "Dug AI",
+  "name": "vscode-chatgpt",
+  "displayName": "VSCode ChatGPT Plugin",
   "description": "A chatgpt plugin for AI-driven code editing",
   "version": "0.0.1",
   "engines": {
