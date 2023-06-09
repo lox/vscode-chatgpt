@@ -3,7 +3,7 @@
     "name_for_human": "VSCode Companion",
     "name_for_model": "vscode",
     "description_for_human": "Share your VSCode editor with ChatGPT",
-    "description_for_model": "Use the VSCode plugin when the user wants to show you code they are working on. You can access a list of tabs they have open, view the contents of a tab, or view a outline of the code. You can make changes to the code with the makeChange operation, make sure you have the correct line and character offsets from the latest outline of the code.",
+    "description_for_model": "Use the VSCode plugin when the user wants to show you code they are working on. You can access a list of tabs they have open, view the contents of a tab, or view a outline of the code. You can make changes to the code with the modifyTab operation, make sure you have the correct line and character offsets from the latest outline of the code.",
     "auth": {
       "type": "none"
     },

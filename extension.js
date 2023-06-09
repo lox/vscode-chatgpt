@@ -17,7 +17,6 @@ function getTabByLabel(label) {
 }
 
 function getSymbolsRecursively(symbols) {
-    // https://github.com/microsoft/vscode/blob/40474d7f457b2821e61c6bad840e4af8ce45415d/src/vs/editor/common/languages.ts#L1097
     const symbolKindNames = {
         0: 'File',
         1: 'Module',
@@ -53,14 +52,18 @@ function getSymbolsRecursively(symbols) {
             name: symbol.name,
             kindName: symbolKindNames[symbol.kind],
             range: symbol.range,
+            children: []   // Initialize children property as an empty array
         }
-        if (symbol.children) {
-            symbolEntry.children = getSymbolsRecursively(symbol.children);
+
+        if(symbol.children) {
+            symbolEntry.children = getSymbolsRecursively(symbol.children);  // Assign the children symbols recursively
         }
+
         allSymbols.push(symbolEntry);
     });
     return allSymbols;
 }
+
 
 function rangeToString(range) {
     return `[${range.start.line},${range.start.character}-${range.end.line},${range.end.character}]`;
