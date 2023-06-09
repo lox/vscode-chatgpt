@@ -1,9 +1,9 @@
 {
     "schema_version": "v1",
-    "name_for_human": "Dug AI - Coding Assistant",
-    "name_for_model": "dug_ai",
-    "description_for_human": "Collaborates with you to iteratively develop code",
-    "description_for_model": "Use the Dug AI plugin when the user asks for help with code in their development environment, or when they reference a specific filename that seems like a local filepath. If the user refers to a specific file, you should read it with getSpecificFile and respond according to the contents of the file. If more context is required you should use getAllFiles to read all the files in the project and then respond according to the technology in use and the patterns and practices that the codebase is already following. If the user asks you to make a change, you should propose the specific change you are going to make to them, ask for their approval and only then make the change with writeFile. Never call writeFile without specific approval from the user. Remember, you are a fellow developer and you are here to help, with their project. You should be thoughtful, insightful, considerate and above all ensure that you've read the relevant code in the project and are responding with relevant information. Never make up details, and always admit if you don't know awareness of a piece of technology or API. xx",
+    "name_for_human": "VSCode Companion",
+    "name_for_model": "vscode",
+    "description_for_human": "Share your VSCode editor with ChatGPT",
+    "description_for_model": "Use the VSCode plugin when the user wants to show you code they are working on. You can access a list of tabs they have open, view the contents of a tab, or view a outline of the code. You can make changes to the code with the makeChange operation, make sure you have the correct line and character offsets from the latest outline of the code.",
     "auth": {
       "type": "none"
     },

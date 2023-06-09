@@ -1,4 +1,4 @@
-# dug-ai README
+# VSCode ChatGPT Plugin
 
 This is the README for your extension "dug-ai". After writing up a brief description, we recommend including the following sections.
 
