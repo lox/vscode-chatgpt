@@ -8,6 +8,7 @@ const fs = require('fs');
 
 let server;
 let serverStatus;
+let outputChannel;
 
 function getTabByLabel(label) {
     for (let tabGroup of vscode.window.tabGroups.all) {
@@ -84,8 +85,6 @@ function renderOutline(symbols, indent = '') {
 }
 
 function activate(context) {
-    console.log("ChatGPT extension activated")
-
     const app = express();
 
     const corsOptions = {
@@ -94,9 +93,18 @@ function activate(context) {
         allowedHeaders: ['content-type', 'openai-conversation-id', 'openai-ephemeral-user-id']
     };
 
-    app.use(cors(corsOptions));
-    app.use(morgan('combined'));
+    // Create a morgan middleware that logs to the outputChannel
+    const morganMiddleware = morgan('combined', {
+        stream: {
+            write: (message) => {
+                outputChannel.appendLine(message.trim());
+            }
+        }
+    });
+
+    app.use(morganMiddleware);
     app.use(express.json());
+    app.use(cors(corsOptions));
     
     app.get('/', (req, res) => {
         res.send('Hello World!');
@@ -120,7 +128,7 @@ function activate(context) {
             }
             res.json(allTabs);
         } catch (error) {
-            console.log('Failed to get tabs: ', error);
+            outputChannel.appendLine(error.toString());
             res.status(500).send('Failed to get tabs');
         }
     });
@@ -131,7 +139,7 @@ function activate(context) {
             const filePath = tab.input.uri.fsPath;
             fs.readFile(filePath, 'utf8', (err, data) => {
                 if (err) {
-                    console.error(err);
+                    outputChannel.appendLine(error.toString());
                     res.status(500).send('Failed to read file');
                 } else {
                     res.send(data);
@@ -183,36 +191,39 @@ function activate(context) {
         }
     });
 
+    outputChannel = vscode.window.createOutputChannel('ChatGPT Plugin');
+    context.subscriptions.push(outputChannel);
+    outputChannel.appendLine('ChatGPT Plugin extension activated');
+
     serverStatus = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100);
     serverStatus.text = 'Server: stopped';
     serverStatus.show();
-
     context.subscriptions.push(serverStatus);
 
     context.subscriptions.push(vscode.commands.registerCommand('extension.startServer', () => {
         try {
             if (!server) {
                 server = app.listen(3000, () => {
-                    console.log('Server started on port 3000');
+                    outputChannel.appendLine('Server started on port 3000');
                     serverStatus.text = 'Server: running';
                 });
             } else {
-                console.log('Server is already running');
+                outputChannel.appendLine('Server is already running');
             }
         } catch (error) {
-            console.error('Failed to start server:', error);
+            outputChannel.appendLine('Failed to start server:'+error.toString());
         }
     }));
 
     context.subscriptions.push(vscode.commands.registerCommand('extension.stopServer', () => {
         if (server) {
             server.close(() => {
-                console.log('Server stopped');
+                outputChannel.appendLine('Server stopped');
                 serverStatus.text = 'Server: stopped';
             });
             server = null;
         } else {
-            console.log('Server is not running');
+            outputChannel.appendLine('Server is not running');
         }
     }));
 
@@ -231,7 +242,7 @@ function deactivate() {
     if (server) {
         server.close();
     }
-    console.log('ChatGPT extension deactivated');
+    outputChannel.appendLine('ChatGPT extension deactivated');
 }
 
 module.exports = {
