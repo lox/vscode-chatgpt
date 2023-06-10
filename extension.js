@@ -6,6 +6,8 @@ const morgan = require('morgan');
 const os = require('os');
 const fs = require('fs');
 
+let server;
+
 function getTabByLabel(label) {
     for (let tabGroup of vscode.window.tabGroups.all) {
         for (let t of tabGroup.tabs) {
@@ -81,6 +83,8 @@ function renderOutline(symbols, indent = '') {
 }
 
 function activate(context) {
+    console.log("ChatGPT extension activated")
+
     const app = express();
 
     const corsOptions = {
@@ -177,14 +181,37 @@ function activate(context) {
             res.status(404).send('No such tab');
         }
     });
-    
-    const server = app.listen(3000, () => {
-        console.log('Server started on port 3000');
-    });
+
+    context.subscriptions.push(vscode.commands.registerCommand('extension.startServer', () => {
+        try {
+            if (!server) {
+                server = app.listen(3000, () => {
+                    console.log('Server started on port 3000');
+                });
+            } else {
+                console.log('Server is already running');
+            }
+        } catch (error) {
+            console.error('Failed to start server:', error);
+        }
+    }));
+
+    context.subscriptions.push(vscode.commands.registerCommand('extension.stopServer', () => {
+        if (server) {
+            server.close(() => {
+                console.log('Server stopped');
+            });
+            server = null;
+        } else {
+            console.log('Server is not running');
+        }
+    }));
 
     context.subscriptions.push({
         dispose: () => {
-            server.close();
+            if (server) {
+                server.close();
+            }
         }
     });
 }
@@ -192,7 +219,10 @@ function activate(context) {
 exports.activate = activate;
 
 function deactivate() {
-    console.log('Extension has been deactivated');
+    if (server) {
+        server.close();
+    }
+    console.log('ChatGPT extension deactivated');
 }
 
 module.exports = {
