@@ -7,6 +7,7 @@ const os = require('os');
 const fs = require('fs');
 
 let server;
+let serverStatus;
 
 function getTabByLabel(label) {
     for (let tabGroup of vscode.window.tabGroups.all) {
@@ -182,11 +183,18 @@ function activate(context) {
         }
     });
 
+    serverStatus = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100);
+    serverStatus.text = 'Server: stopped';
+    serverStatus.show();
+
+    context.subscriptions.push(serverStatus);
+
     context.subscriptions.push(vscode.commands.registerCommand('extension.startServer', () => {
         try {
             if (!server) {
                 server = app.listen(3000, () => {
                     console.log('Server started on port 3000');
+                    serverStatus.text = 'Server: running';
                 });
             } else {
                 console.log('Server is already running');
@@ -200,6 +208,7 @@ function activate(context) {
         if (server) {
             server.close(() => {
                 console.log('Server stopped');
+                serverStatus.text = 'Server: stopped';
             });
             server = null;
         } else {
