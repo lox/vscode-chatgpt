@@ -2,7 +2,7 @@
   "name": "chatgpt-plugin",
   "displayName": "ChatGPT Plugin",
   "description": "A ChatGPT plugin for collaborating on code with AI",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "publisher": "lachlandonald",
   "repository": "github:lox/vscode-chatgpt",
   "engines": {
@@ -29,7 +29,8 @@
     "vscode:prepublish": "npm run esbuild-base -- --minify",
     "esbuild-base": "esbuild ./extension.js --bundle --outfile=out/main.js --external:vscode --format=cjs --platform=node --target=es2020",
     "esbuild": "npm run esbuild-base -- --sourcemap",
-    "esbuild-watch": "npm run esbuild-base -- --sourcemap --watch"
+    "esbuild-watch": "npm run esbuild-base -- --sourcemap --watch",
+    "package": "vsce package"
   },
   "devDependencies": {
     "@types/glob": "^8.1.0",
